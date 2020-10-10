@@ -1,11 +1,13 @@
 import React from 'react';
 import { Typography, Button, Form, message, Input, Icon } from 'antd';
 
+const { Title } = Typography;
+
 function VideoUploadPage() {
   return (
     <div style={{}}>
       <div style={{}}>
-        <Title>동영상 업로드</Title>
+        <Title level={2}>동영상 업로드</Title>
       </div>
 
       <Form onSubmit>
@@ -14,6 +16,7 @@ function VideoUploadPage() {
               {/*Drop zone*/}
 
               {/*Thumbnail*/}
+              
               <img/>
             </div>
           </div>
