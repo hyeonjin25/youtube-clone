@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Button, Form, message, Input } from 'antd';
+import Icon from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import Dropzone from 'react-dropzone'
 const { Title } = Typography;
@@ -11,10 +12,22 @@ function VideoUploadPage() {
         <Title level={2}>동영상 업로드</Title>
           </div>
 
-      <Form onSubmit style={{display:'flex',flexDirection:'column',justifyContent:'space-between',alignItems:'flex-start'}}>
+                  <Form onSubmit style={{display:'flex',flexDirection:'column',justifyContent:'space-between',alignItems:'flex-start'}}>
         <div>
           <div>
-            {/*Drop zone*/}
+            {/*Drop zone*/}\
+            <Dropzone
+            onDrop 
+            multiple
+            maxsize>
+            {({getRootProps, getInputProps})=>(
+              <div style={{width: '300px', height: '240px', border:'1px solid lightgray',
+              alignItems:'center', justifyContent:'center'}} {...getRootProps()}> 
+                <input {...getInputProps()}/>
+                <Icon type="plus" style={{fontSize:'3rem'}}/>
+              </div>
+            )}
+            </Dropzone>
 
             {/*Thumbnail*/}
 
