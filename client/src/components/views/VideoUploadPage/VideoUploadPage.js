@@ -1,69 +1,117 @@
-import React from 'react';
-import { Typography, Button, Form, Input } from 'antd';
-import {PlusOutlined} from '@ant-design/icons';
-import TextArea from 'antd/lib/input/TextArea';
-import Dropzone from 'react-dropzone'
+import React, { useState } from "react";
+import { Typography, Button, Form, Input } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import TextArea from "antd/lib/input/TextArea";
+import Dropzone from "react-dropzone";
+
 const { Title } = Typography;
 
+const privateOption = [
+  { value: 0, label: "Private" },
+  { value: 1, label: "Public" },
+];
+
+const categoryOption = [
+  { value: 0, label: "Film & Animation" },
+  { value: 1, label: "Autos & Vehicles" },
+  { value: 2, label: "Music" },
+  { value: 3, label: "Pets & Animals" },
+];
+
 function VideoUploadPage() {
+  const [VideoTitle, setVideoTitle] = useState("");
+  const [Description, setDescription] = useState("");
+  const [Private, setPrivate] = useState(0);
+  const [Category, setCategory] = useState("Film & Animation");
+
   return (
-    <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
-      <div style={{textAlign:'center', marginBottom:'2rem'}}>
+    <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
+      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <Title level={2}>동영상 업로드</Title>
       </div>
 
       <Form onSubmit>
-      <div /*style={{display:'flex', justifyContent:'space-between'}}*/>
+        <div /*style={{display:'flex', justifyContent:'space-between'}}*/>
+          {/*Drop zone*/}
+          <Dropzone onDrop multiple maxsize>
+            {({ getRootProps, getInputProps }) => (
+              <div
+                style={{
+                  width: "300px",
+                  height: "240px",
+                  border: "1px solid lightgray",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                <PlusOutlined style={{ fontSize: "3rem" }} />
+              </div>
+            )}
+          </Dropzone>
 
-            {/*Drop zone*/}
-            <Dropzone
-              onDrop 
-              multiple
-              maxsize>
-              {({getRootProps, getInputProps})=>(
-                <div style={{ width: '300px', height: '240px', border:'1px solid lightgray',display:'flex',
-                alignItems:'center', justifyContent:'center'}} {...getRootProps()}> 
-                  <input {...getInputProps()}/>
-                  <PlusOutlined  style={{fontSize:'3rem'}}/>
-                </div>
-              )}
-            </Dropzone>
+          {/*Thumbnail*/}
 
-            {/*Thumbnail*/}
-
-            <div>
-              <img />
-            </div>
+          <div>
+            <img />
+          </div>
         </div>
 
-        <br/>
-        <br/>
+        <br />
+        <br />
         <label>Title</label>
-        <Input/>
-        <br/>
-      <br/>
+        <Input
+          value={VideoTitle}
+          onChange={(e) => {
+            setVideoTitle(e.currentTarget.value);
+          }}
+        />
+        <br />
+        <br />
 
         <label>Description</label>
-        <TextArea/>
-        <br/>
-        <br/>
+        <TextArea
+          value={Description}
+          onChange={(e) => {
+            setDescription(e.currentTarget.value);
+          }}
+        />
+        <br />
+        <br />
 
-      <select>
-        <option key value></option>
-      </select>
-        <br/>
-        <br/>
-      <select>
-        <option></option>
-      </select>
-        <br/>
-        <br/>
+        <select
+          onChange={(e) => {
+            setPrivate(e.currentTarget.value);
+          }}
+        >
+          {privateOption.map((item, index) => (
+            <option key={index} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <br />
+        <br />
+        <select
+          onChange={(e) => {
+            setCategory(e.currentTarget.value);
+          }}
+        >
+          {categoryOption.map((item, index) => (
+            <option key={index} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <br />
+        <br />
 
-      <Button type='primary' size='large'>
-        submit
-      </Button>
+        <Button type='primary' size='large'>
+          submit
+        </Button>
       </Form>
-
     </div>
   );
 }
