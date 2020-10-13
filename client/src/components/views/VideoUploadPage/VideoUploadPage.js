@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Axios from "axios"
 import { Typography, Button, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
@@ -24,6 +25,24 @@ function VideoUploadPage() {
   const [Private, setPrivate] = useState(0);
   const [Category, setCategory] = useState("Film & Animation");
 
+  const onDrop = (files) => {
+    let formData = new FormData();
+    const config = {
+      header: { "content-type": "multipart/form-data" },
+    };
+    formData.append("file", files[0]);
+
+    Axios.post('/api/video/uploadfiles',formData,config)
+      .then(response=>{
+        if(response.data.success){
+
+        }
+        else{
+          alert('비디오 업로드를 실패했습니다!')
+        }
+      })
+  };
+
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
@@ -33,7 +52,7 @@ function VideoUploadPage() {
       <Form onSubmit>
         <div /*style={{display:'flex', justifyContent:'space-between'}}*/>
           {/*Drop zone*/}
-          <Dropzone onDrop multiple maxsize>
+          <Dropzone onDrop={onDrop} multipl={false} maxsize={100000000}>
             {({ getRootProps, getInputProps }) => (
               <div
                 style={{
