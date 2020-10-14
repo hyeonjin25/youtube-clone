@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios"
+import Axios from "axios";
 import { Typography, Button, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
@@ -27,20 +27,22 @@ function VideoUploadPage() {
 
   const onDrop = (files) => {
     let formData = new FormData();
+
+    //어떤 유형의 데이터가 전송되었는지를 알려주기 위함 -> 데이터 전송시 같이 보내줌
+    //body에는 보내는 데이터, header에는 body에 들어가는 데이터 타입을 보내줌
     const config = {
       header: { "content-type": "multipart/form-data" },
     };
     formData.append("file", files[0]);
 
-    Axios.post('/api/video/uploadfiles',formData,config)
-      .then(response=>{
-        if(response.data.success){
-
-        }
-        else{
-          alert('비디오 업로드를 실패했습니다!')
-        }
-      })
+    Axios.post("/api/video/uploadfiles", formData, config)
+    .then((response) => {
+      if (response.data.success) {
+        console.log(response.data);
+      } else {
+        alert("비디오 업로드를 실패했습니다!");
+      }
+    });
   };
 
   return (
@@ -66,6 +68,7 @@ function VideoUploadPage() {
                 {...getRootProps()}
               >
                 <input {...getInputProps()} />
+                {/*플러스 아이콘*/}
                 <PlusOutlined style={{ fontSize: "3rem" }} />
               </div>
             )}
