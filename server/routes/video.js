@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Video } = require("../models/Video");
+//const { Video } = require("../models/Video");
 
 const { auth } = require("../middleware/auth");
 
@@ -40,7 +40,7 @@ router.post("/uploadfiles", (req, res) => {
     return res.json({
       success: true,
       url: res.req.file.path,
-      fileName: res.req.file.fileName,
+      fileName: res.req.file.filename,
     });
   });
 });
