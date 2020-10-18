@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
-import { Drawer, Button } from 'antd';
+import { Drawer, Button, Image } from 'antd';
 import Icon from '@ant-design/icons';
 import './Sections/Navbar.css';
+import youtube_logo from '../../../image/youtube_logo.png'
 
 function NavBar() {
   const [visible, setVisible] = useState(false)
@@ -17,9 +18,11 @@ function NavBar() {
   };
 
   return (
-    <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
+    <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%', height:'56px'}}>
       <div className="menu__logo">
-        <a href="/">Logo</a>
+        <a href="/" style={{padding:'0', paddingLeft:'50px'}}>
+          <img src={youtube_logo} alt='youtube_logo' width='76'/>
+        </a>
       </div>
       <div className="menu__container">
         <div className="menu_left">
