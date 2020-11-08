@@ -35,6 +35,7 @@ const videoSchema = mongoose.Schema(
       type: String,
     },
   },
+  //updatd date 표시
   { timestamps: true }
 );
 

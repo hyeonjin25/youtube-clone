@@ -4,6 +4,7 @@ import { Typography, Button, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import Dropzone from "react-dropzone";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 
@@ -20,10 +21,13 @@ const categoryOption = [
 ];
 
 function VideoUploadPage() {
+  const user = useSelector((state) => state.user);
   const [VideoTitle, setVideoTitle] = useState("");
   const [Description, setDescription] = useState("");
   const [Private, setPrivate] = useState(0);
   const [Category, setCategory] = useState("Film & Animation");
+  const [FilePath, setFilePath] = useState("");
+  const [Duration, setDuration] = useState("");
 
   const onDrop = (files) => {
     let formData = new FormData();
@@ -35,12 +39,35 @@ function VideoUploadPage() {
     };
     formData.append("file", files[0]);
 
-    Axios.post("/api/video/uploadfiles", formData, config)
-    .then((response) => {
+    Axios.post("/api/video/uploadfiles", formData, config).then((response) => {
+      if (response.data.success) {
+        console.log(response.data);
+        console.log("업로드 성공");
+      } else {
+        alert("비디오 업로드를 실패했습니다!");
+      }
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const variables = {
+      writer: user.userData._id,
+      title: VideoTitle,
+      description: Description,
+      privacy: Private,
+      filePath: FilePath,
+      category: Category,
+      duration: Duration,
+    };
+
+    Axios.post("/api/video/uploadVideo", variables).then((response) => {
+      console.log(response);
       if (response.data.success) {
         console.log(response.data);
       } else {
-        alert("비디오 업로드를 실패했습니다!");
+        alert("비디오 업로드 실패!");
       }
     });
   };
@@ -51,7 +78,7 @@ function VideoUploadPage() {
         <Title level={2}>동영상 업로드</Title>
       </div>
 
-      <Form onSubmit>
+      <Form onSubmit={onSubmit}>
         <div /*style={{display:'flex', justifyContent:'space-between'}}*/>
           {/*Drop zone*/}
           <Dropzone onDrop={onDrop} multipl={false} maxsize={100000000}>
@@ -130,7 +157,7 @@ function VideoUploadPage() {
         <br />
         <br />
 
-        <Button type='primary' size='large'>
+        <Button type='primary' size='large' onClick={onSubmit}>
           submit
         </Button>
       </Form>
