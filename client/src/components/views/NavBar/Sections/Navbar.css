@@ -9,8 +9,8 @@
 }
 
 .menu__logo {
+  width: 150px;
   float: left;
-  line-height: 51px;
 }
 
 .menu__logo a {
