@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
+import axios from "axios";
 
 function LandingPage() {
-    return (
-        <>
-            <div className="app">
-                <FaCode style={{ fontSize: '4rem' }} /><br />
-                <span style={{ fontSize: '2rem' }}>Let's Start Coding!</span>
-            </div>
-            <div style={{ float: 'right' }}>Thanks For Using This Boiler Plate by John Ahn</div>
-        </>
-    )
+  const [Video, setVideo] = useState([]);
+
+  useEffect(() => {
+    axios.get("api/video/getVideos").then((res) => {
+      if (res.data.success) {
+        console.log(res.data);
+        setVideo(res.data.videos);
+      } else {
+        alert("비디오 가져오기를 실패했습니다.");
+      }
+    });
+  }, []);
+
+  return <div>LandingPage</div>;
 }
 
-export default LandingPage
+export default LandingPage;
