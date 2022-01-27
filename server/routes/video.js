@@ -5,18 +5,22 @@ const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
 
 const multer = require("multer");
+
 //storage multer config
 let storage = multer.diskStorage({
+  // 파일을 어디에 저장할지
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "uploads/"); // upload라는 폴더에 저장 -- uploads 폴더는 server가 아닌 한 단계 위에 만들기
   },
+  // 파일을 어떤 이름으로 저장할지
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
   },
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname);
 
-    if (ext != ".mp4") {
+    if (ext !== ".mp4") {
+      // 비디오만 업로드 가능
       return cb(res.status(400).end("only mp4 is allowed"), false);
     }
 
@@ -24,14 +28,14 @@ let storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("file");
+const upload = multer({ storage: storage }).single("file"); //파일 하나만
 
 //=================================
 //             Video
 //=================================
 
 router.post("/uploadfiles", (req, res) => {
-  //비디오를 서버에 저장
+  // client에서 받은 비디오를 서버에 저장
   upload(req, res, (err) => {
     if (err) {
       return res.json({ success: false, err });
@@ -39,8 +43,8 @@ router.post("/uploadfiles", (req, res) => {
     //파일이 저장된 경로를 클라이언트에게 보내줌
     return res.json({
       success: true,
-      url: res.req.file.path,
-      fileName: res.req.file.filename,
+      url: res.req.file.path, // 파일이 어디 저장됐는지 알려줌
+      fileName: res.req.file.filename, // 파일이 어떤 이름으로 저장됐는지 알려줌
     });
   });
 });
