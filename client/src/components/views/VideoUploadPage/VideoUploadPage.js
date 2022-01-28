@@ -28,6 +28,7 @@ function VideoUploadPage() {
   const [Category, setCategory] = useState("Film & Animation");
   const [FilePath, setFilePath] = useState("");
   const [Duration, setDuration] = useState("");
+  const [ThumbnailPath, setThumbnailPath] = useState("");
 
   const onDrop = (files) => {
     let formData = new FormData();
@@ -41,8 +42,22 @@ function VideoUploadPage() {
 
     Axios.post("/api/video/uploadfiles", formData, config).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
-        console.log("업로드 성공");
+        let variable = {
+          url: response.data.url,
+          fileName: response.data,
+        };
+
+        setFilePath(response.data.url);
+
+        // 썸네일 생성
+        Axios.post("/api/video/thumbnail", variable).then((response) => {
+          if (response.data.success) {
+            setDuration(response.data.fileDuration);
+            setThumbnailPath(response.data.url);
+          } else {
+            alert("썸네일 생성에 실패했습니다.");
+          }
+        });
       } else {
         alert("비디오 업로드를 실패했습니다!");
       }
@@ -63,7 +78,6 @@ function VideoUploadPage() {
     };
 
     Axios.post("/api/video/uploadVideo", variables).then((response) => {
-      console.log(response);
       if (response.data.success) {
         console.log(response.data);
       } else {
@@ -79,7 +93,7 @@ function VideoUploadPage() {
       </div>
 
       <Form onSubmit={onSubmit}>
-        <div /*style={{display:'flex', justifyContent:'space-between'}}*/>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           {/*Drop zone*/}
           <Dropzone onDrop={onDrop} multipl={false} maxsize={100000000}>
             {({ getRootProps, getInputProps }) => (
@@ -102,10 +116,14 @@ function VideoUploadPage() {
           </Dropzone>
 
           {/*Thumbnail*/}
-
-          <div>
-            <img />
-          </div>
+          {ThumbnailPath && (
+            <div>
+              <img
+                src={`http://localhost:5000/${ThumbnailPath}`}
+                alt='thumbnail'
+              />
+            </div>
+          )}
         </div>
 
         <br />
