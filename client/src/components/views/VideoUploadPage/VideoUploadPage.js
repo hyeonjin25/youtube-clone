@@ -20,7 +20,7 @@ const categoryOption = [
   { value: 3, label: "Pets & Animals" },
 ];
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
   const user = useSelector((state) => state.user);
   const [VideoTitle, setVideoTitle] = useState("");
   const [Description, setDescription] = useState("");
@@ -64,6 +64,7 @@ function VideoUploadPage() {
     });
   };
 
+  // 비디오 보내는 이벤트
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -75,11 +76,16 @@ function VideoUploadPage() {
       filePath: FilePath,
       category: Category,
       duration: Duration,
+      thumbnail: ThumbnailPath,
     };
 
     Axios.post("/api/video/uploadVideo", variables).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
+        alert("성공적으로 업로드 했습니다!");
+        // 1초 뒤에 홈화면으로 이동
+        setTimeout(() => {
+          props.history.push("/");
+        }, 1000);
       } else {
         alert("비디오 업로드 실패!");
       }

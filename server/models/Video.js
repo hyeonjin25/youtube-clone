@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const videoSchema = mongoose.Schema(
   {
     writer: {
+      // user 모델에서의 모든 정보를 가져올 수 있음.
       type: Schema.Types.ObjectId,
       ref: "User",
     },
@@ -35,7 +36,7 @@ const videoSchema = mongoose.Schema(
       type: String,
     },
   },
-  //updatd date 표시
+  // 만든 날짜, update 날짜 표시
   { timestamps: true }
 );
 
