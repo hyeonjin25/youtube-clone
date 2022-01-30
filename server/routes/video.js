@@ -109,7 +109,7 @@ router.get("/getVideos", (req, res) => {
   //비디오를 db에서 가져와서 클라이언트에 보낸다.
 
   Video.find()
-    .populate("writer")
+    .populate("writer") // writer의 모든 user정보 가져오기
     .exec((err, videos) => {
       if (err) return res.status(400).send(err);
       res.status(200).json({ success: true, videos });
