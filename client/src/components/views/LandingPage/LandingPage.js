@@ -24,7 +24,7 @@ function LandingPage() {
 
   const renderCards = Video.map((video, index) => {
     var minutes = Math.floor(video.duration / 60);
-    var secondes = Math.floor(video.duration - minutes * 60);
+    var seconds = Math.floor(video.duration - minutes * 60);
 
     return (
       <Col key={index} lg={6} md={8} xs={24}>
@@ -37,7 +37,7 @@ function LandingPage() {
             />
             <div>
               <span className='duration'>
-                {minutes}:{secondes}
+                {minutes}:{seconds}
               </span>
             </div>
           </div>
