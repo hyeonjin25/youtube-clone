@@ -3,7 +3,8 @@
 
 dev.js
 
-
+# videos & thumbnails
+/uploads
 
 .DS_Store
 
