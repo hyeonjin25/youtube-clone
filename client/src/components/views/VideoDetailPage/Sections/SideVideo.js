@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import Axios from "axios";
 
 function SideVideo() {
   const [sideVideos, setSideVideos] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/video/getVideos").then((res) => {
+    Axios.get("/api/video/getVideos").then((res) => {
       if (res.data.success) {
-        console.log(res.data.videos);
         setSideVideos(res.data.videos);
       } else {
         alert("추천 비디오를 불러 올 수 없습니다.");

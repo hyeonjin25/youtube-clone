@@ -9,7 +9,7 @@ const { Title } = Typography;
 const { Meta } = Card;
 
 function LandingPage() {
-  const [Video, setVideo] = useState([]);
+  const [video, setVideo] = useState([]);
 
   useEffect(() => {
     axios.get("/api/video/getVideos").then((res) => {
@@ -22,7 +22,7 @@ function LandingPage() {
     });
   }, []);
 
-  const renderCards = Video.map((video, index) => {
+  const renderCards = video.map((video, index) => {
     var minutes = Math.floor(video.duration / 60);
     var seconds = Math.floor(video.duration - minutes * 60);
 
