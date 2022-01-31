@@ -12,7 +12,7 @@ function LandingPage() {
   const [Video, setVideo] = useState([]);
 
   useEffect(() => {
-    axios.get("api/video/getVideos").then((res) => {
+    axios.get("/api/video/getVideos").then((res) => {
       if (res.data.success) {
         console.log(res.data);
         setVideo(res.data.videos);
@@ -28,7 +28,7 @@ function LandingPage() {
 
     return (
       <Col key={index} lg={6} md={8} xs={24}>
-        <a href={`/video/post/${video._id}`}>
+        <a href={`/video/${video._id}`}>
           <div style={{ position: "relative" }}>
             <img
               style={{ width: "100%" }}

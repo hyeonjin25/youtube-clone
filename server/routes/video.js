@@ -112,7 +112,17 @@ router.get("/getVideos", (req, res) => {
     .populate("writer") // writer의 모든 user정보 가져오기
     .exec((err, videos) => {
       if (err) return res.status(400).send(err);
-      res.status(200).json({ success: true, videos });
+      return res.status(200).json({ success: true, videos });
+    });
+});
+
+router.post("/getVideoDetail", (req, res) => {
+  // videoId에 해당하는 비디오를 db에서 가져와서 클라이언트에 보낸다.
+  Video.findOne({ _id: req.body.videoId })
+    .populate("writer") // writer의 모든 user정보 가져오기
+    .exec((err, videoDetail) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).json({ success: true, videoDetail });
     });
 });
 
