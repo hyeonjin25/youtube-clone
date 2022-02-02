@@ -8,18 +8,24 @@ import moment from "moment";
 const { Title } = Typography;
 const { Meta } = Card;
 
-function LandingPage() {
+function SubscriptionPage() {
   const [video, setVideo] = useState([]);
 
+  let subscriptionVariables = {
+    userFrom: localStorage.getItem("userId"),
+  };
+
   useEffect(() => {
-    axios.get("/api/video/getVideos").then((res) => {
-      if (res.data.success) {
-        console.log(res.data);
-        setVideo(res.data.videos);
-      } else {
-        alert("비디오 가져오기를 실패했습니다.");
-      }
-    });
+    axios
+      .post("/api/video/getSubscriptionVideos", subscriptionVariables)
+      .then((res) => {
+        if (res.data.success) {
+          console.log(res.data);
+          setVideo(res.data.videos);
+        } else {
+          alert("비디오 가져오기를 실패했습니다.");
+        }
+      });
   }, []);
 
   const renderCards = video.map((video, index) => {
@@ -27,9 +33,9 @@ function LandingPage() {
     var seconds = Math.floor(video.duration - minutes * 60);
 
     return (
-      <Col key={video._id} lg={6} md={8} xs={24}>
-        <div style={{ position: "relative" }}>
-          <a href={`/video/${video._id}`}>
+      <Col lg={6} md={8} xs={24}>
+        <a href={`/video/${video._id}`}>
+          <div style={{ position: "relative" }}>
             <img
               style={{ width: "100%" }}
               src={`http://localhost:5000/${video.thumbnail}`}
@@ -40,12 +46,13 @@ function LandingPage() {
                 {minutes}:{seconds}
               </span>
             </div>
-          </a>
-        </div>
+          </div>
+        </a>
         <br />
         <Meta
           avatar={<Avatar src={video.writer.image} />}
           title={video.title}
+          description=''
         />
         <span>{video.writer.name}</span>
         <br />
@@ -64,4 +71,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default SubscriptionPage;
