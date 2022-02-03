@@ -24,6 +24,11 @@ function VideoDetailPage(props) {
   }, []);
 
   if (videoDetail.writer) {
+    const subscribeButton = videoDetail.writer._id !==
+      localStorage.getItem("userId") && (
+      <Subscribe userTo={videoDetail.writer._id} />
+    );
+
     return (
       <Row gutter={[16, 16]}>
         <Col lg={18} xs={24}>
@@ -41,13 +46,11 @@ function VideoDetailPage(props) {
                 controls
               />
             </div>
-            <List.Item
-              actions={[<Subscribe userTo={videoDetail.writer._id} />]}
-            >
+            <List.Item actions={[subscribeButton]}>
               <List.Item.Meta
                 avatar={videoDetail.writer.image}
-                title={videoDetail.description}
-                description
+                title={videoDetail.writer.name}
+                description={videoDetail.description}
               />
             </List.Item>
           </div>
