@@ -8,7 +8,7 @@ import Comment from "./Sections/Comment";
 function VideoDetailPage(props) {
   const videoId = props.match.params.videoId;
   const [videoDetail, setVideoDetail] = useState([]);
-  const [subscribe, setSubscribe] = useState([]);
+  const [comment, setComment] = useState([]);
 
   let variable = {
     videoId: videoId,
@@ -55,7 +55,7 @@ function VideoDetailPage(props) {
               />
             </List.Item>
 
-            <Comment />
+            <Comment postId={videoId} />
           </div>
         </Col>
         <Col lg={6} xs={24}>
