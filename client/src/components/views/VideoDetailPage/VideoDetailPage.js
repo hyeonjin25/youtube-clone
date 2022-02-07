@@ -8,7 +8,7 @@ import Comment from "./Sections/Comment";
 function VideoDetailPage(props) {
   const videoId = props.match.params.videoId;
   const [videoDetail, setVideoDetail] = useState([]);
-  const [comment, setComment] = useState([]);
+  const [comments, setComments] = useState([]);
 
   let variable = {
     videoId: videoId,
@@ -22,7 +22,20 @@ function VideoDetailPage(props) {
         alert("비디오 가져오기를 실패했습니다.");
       }
     });
+
+    Axios.post("/api/comment/getComments", variable).then((res) => {
+      if (res.data.success) {
+        setComments(res.data.comments);
+        console.log(res.data.comments);
+      } else {
+        alert("댓글 가져오기를 실패했습니다.");
+      }
+    });
   }, []);
+
+  const refreshFunction = (newComment) => {
+    setComments(comments.concat(newComment)); // 새로 달린 댓글 정보 보여주기
+  };
 
   if (videoDetail.writer) {
     const subscribeButton = videoDetail.writer._id !==
@@ -55,7 +68,11 @@ function VideoDetailPage(props) {
               />
             </List.Item>
 
-            <Comment postId={videoId} />
+            <Comment
+              videoId={videoId}
+              comments={comments}
+              refreshFunction={refreshFunction}
+            />
           </div>
         </Col>
         <Col lg={6} xs={24}>

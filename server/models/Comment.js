@@ -7,11 +7,12 @@ const commentSchema = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  postId: {
+  videoId: {
     type: Schema.Types.ObjectId,
     ref: "Video",
   },
-  responseTO: {
+  // 대댓글
+  responseTo: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
