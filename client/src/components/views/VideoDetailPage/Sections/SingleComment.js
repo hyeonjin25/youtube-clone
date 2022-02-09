@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Comment, Avatar, Button, Input } from "antd";
 import Axios from "axios";
+import LikeDislikes from "./LikeDislikes";
 
 function SingleComment(props) {
   const user = useSelector((state) => state.user);
@@ -53,7 +54,7 @@ function SingleComment(props) {
     <div>
       {/* 댓글 */}
       <Comment
-        actions={actions}
+        actions={[<LikeDislikes commentId={props.comment._id} />, actions]}
         author={props.comment.writer.name}
         avatar={<Avatar src={props.comment.writer.image} alt />}
         content={props.comment.content}

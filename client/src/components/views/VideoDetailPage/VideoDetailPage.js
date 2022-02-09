@@ -27,7 +27,6 @@ function VideoDetailPage(props) {
     Axios.post("/api/comment/getComments", variable).then((res) => {
       if (res.data.success) {
         setComments(res.data.comments);
-        console.log(res.data.comments);
       } else {
         alert("댓글 가져오기를 실패했습니다.");
       }
@@ -61,7 +60,14 @@ function VideoDetailPage(props) {
                 controls
               />
             </div>
-            <List.Item actions={[<LikeDislikes />, subscribeButton]}>
+
+            {/* 비디오를 좋아요/싫어요 하는 버튼, 구독 버튼 */}
+            <List.Item
+              actions={[
+                <LikeDislikes video videoId={videoId} />,
+                subscribeButton,
+              ]}
+            >
               <List.Item.Meta
                 avatar={<Avatar src={videoDetail.writer.image} />}
                 title={videoDetail.writer.name}
